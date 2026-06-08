@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import Image from "next/image";
 import type { Project } from "@/data/projects";
 
 interface ProjectCardProps {
@@ -9,87 +9,105 @@ interface ProjectCardProps {
   index?: number;
 }
 
-export default function ProjectCard({ project, onVisitSite, index = 0 }: ProjectCardProps) {
-  const [isHovered, setIsHovered] = useState(false);
+const GithubIcon = ({ size = 18 }: { size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+  </svg>
+);
+
+export default function ProjectCard({ project, onVisitSite }: ProjectCardProps) {
+  const hasLive = Boolean(project.liveUrl);
+
+  const previewInner = (
+    <>
+      {project.image ? (
+        <Image
+          src={project.image}
+          alt={project.title}
+          fill
+          sizes="(max-width: 768px) 100vw, 33vw"
+          className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+        />
+      ) : (
+        <>
+          {/* placeholder image slot — swap in a screenshot later */}
+          <div className="absolute inset-0 bg-bg-secondary bg-[radial-gradient(circle_at_30%_20%,rgba(6,179,0,0.06),transparent_55%)]" />
+          <span className="absolute inset-0 flex items-center justify-center text-7xl font-semibold text-[rgba(0,0,0,0.06)] group-hover:text-[rgba(0,0,0,0.09)] transition-colors duration-500 select-none font-display">
+            {project.title.charAt(0)}
+          </span>
+          <span className="absolute bottom-3 left-3 text-[0.65rem] text-text-muted bg-white/70 backdrop-blur-sm border border-border rounded-full px-2 py-0.5">
+            preview placeholder
+          </span>
+        </>
+      )}
+
+      {/* meta badges */}
+      <span className="absolute top-3 left-3 text-xs text-text-primary font-mono bg-white/80 backdrop-blur-sm border border-border rounded-full px-2 py-0.5">
+        {project.year}
+      </span>
+      <span className="absolute top-3 right-3 tech-badge bg-white/90 backdrop-blur-sm">
+        {project.category}
+      </span>
+
+      {/* hover arrow */}
+      <span className="absolute bottom-3 right-3 w-9 h-9 rounded-full bg-white border border-border flex items-center justify-center text-text-primary opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 group-hover:border-accent transition-all duration-300 shadow-sm">
+        {hasLive ? (
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M7 17L17 7M9 7h8v8" />
+          </svg>
+        ) : (
+          <GithubIcon size={16} />
+        )}
+      </span>
+    </>
+  );
 
   return (
-    <div
-      className="glass-card overflow-hidden group"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      {/* Image area */}
-      <div className="relative h-44 sm:h-52 overflow-hidden">
-        <div
-          className="absolute inset-0 transition-transform duration-700 group-hover:scale-110"
-          style={{
-            background: `linear-gradient(135deg, 
-              hsl(${140 + (index * 10) % 30}, 30%, 8%) 0%, 
-              hsl(${150 + (index * 15) % 20}, 20%, 5%) 50%,
-              hsl(${145 + (index * 10) % 20}, 25%, 7%) 100%)`,
-          }}
-        />
-        {/* Green glow overlay */}
-        <div
-          className="absolute inset-0 opacity-20"
-          style={{
-            background: "radial-gradient(circle at 70% 30%, rgba(0, 230, 118, 0.15), transparent 60%)",
-          }}
-        />
-        {/* Project icon overlay */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-5xl opacity-30 group-hover:opacity-50 group-hover:scale-110 transition-all duration-500">
-            {index % 3 === 0 ? "🚀" : index % 3 === 1 ? "💡" : "⚡"}
-          </div>
-        </div>
-        {/* Year badge */}
-        <div className="absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-medium" style={{ background: "var(--accent-subtle)", color: "var(--accent-bright)" }}>
-          {project.year}
-        </div>
-        {/* Category badge */}
-        <div className="absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm" style={{ background: "rgba(10, 6, 18, 0.7)", color: "var(--text-secondary)" }}>
-          {project.category}
-        </div>
-        {/* Hover overlay */}
-        <div className={`absolute inset-0 flex items-center justify-center gap-3 transition-all duration-400 ${isHovered ? "opacity-100" : "opacity-0"}`} style={{ background: "rgba(10, 6, 18, 0.7)", backdropFilter: "blur(4px)" }}>
-          <button
-            onClick={() => onVisitSite(project)}
-            className="btn-primary !py-2 !px-4 text-xs"
-          >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-              <polyline points="15 3 21 3 21 9" />
-              <line x1="10" y1="14" x2="21" y2="3" />
-            </svg>
-            Live Site
-          </button>
+    <div className="card group flex flex-col overflow-hidden">
+      {/* Preview area */}
+      {hasLive ? (
+        <button
+          onClick={() => onVisitSite(project)}
+          className="relative h-48 sm:h-52 w-full overflow-hidden text-left"
+          aria-label={`Open ${project.title}`}
+        >
+          {previewInner}
+        </button>
+      ) : (
+        <a
+          href={project.githubUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="relative h-48 sm:h-52 w-full overflow-hidden text-left block"
+          aria-label={`${project.title} on GitHub`}
+        >
+          {previewInner}
+        </a>
+      )}
+
+      {/* Content */}
+      <div className="flex flex-col flex-1 p-5">
+        <div className="flex items-start justify-between gap-3">
+          <h3 className="text-base font-semibold text-text-primary">
+            {project.title}
+          </h3>
           {project.githubUrl && (
             <a
               href={project.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-secondary !py-2 !px-4 text-xs"
+              className="text-text-muted hover:text-text-primary transition-colors shrink-0 mt-0.5"
+              aria-label="Source code"
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-              </svg>
-              Code
+              <GithubIcon />
             </a>
           )}
         </div>
-      </div>
-
-      {/* Content */}
-      <div className="p-4 sm:p-5">
-        <h3 className="text-base sm:text-lg font-semibold text-text-primary mb-2 group-hover:gradient-text transition-all duration-300">
-          {project.title}
-        </h3>
-        <p className="text-text-secondary text-sm leading-relaxed mb-4 line-clamp-2">
+        <p className="mt-2 text-sm text-text-secondary leading-relaxed line-clamp-2">
           {project.description}
         </p>
 
-        {/* Tech stack */}
-        <div className="flex flex-wrap gap-1.5 sm:gap-2">
+        <div className="mt-4 pt-4 border-t border-border flex flex-wrap gap-1.5">
           {project.techStack.slice(0, 4).map((tech) => (
             <span key={tech} className="tech-badge">
               {tech}

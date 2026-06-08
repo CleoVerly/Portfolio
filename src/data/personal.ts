@@ -19,8 +19,8 @@ export interface PersonalInfo {
 export const personalInfo: PersonalInfo = {
   name: "CLEOVERLY",
   title: "Full-Stack Developer",
-  tagline: "Crafting digital experiences that inspire and innovate",
-  bio: "Seorang developer yang passionate dalam membangun aplikasi web modern dengan perhatian terhadap detail dan user experience. Berpengalaman dalam membangun solusi end-to-end dari konsep hingga deployment, dengan fokus pada performa dan estetika.",
+  tagline: "I build fast, clean web products — from first sketch to production.",
+  bio: "I'm a full-stack developer focused on building fast, reliable web apps. I like working end-to-end — designing the interface, writing the API, and shipping to production — and I sweat the small details and performance along the way.",
   email: "misteragus46@gmail.com",
   socials: {
     github: "https://github.com/cleoverly",

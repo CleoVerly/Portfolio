@@ -2,17 +2,12 @@
 
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import dynamic from "next/dynamic";
 import Link from "next/link";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import ProjectCard from "@/components/ProjectCard";
 import LinkConfirmModal from "@/components/LinkConfirmModal";
 import Footer from "@/components/Footer";
 import { projects, categories, type Project } from "@/data/projects";
-
-const BubbleCanvas = dynamic(() => import("@/components/BubbleCanvas"), {
-  ssr: false,
-});
 
 export default function ProjectsPage() {
   const [activeCategory, setActiveCategory] = useState("All");
@@ -45,65 +40,48 @@ export default function ProjectsPage() {
 
   return (
     <>
-      <BubbleCanvas />
-
       {/* Top Nav Bar */}
       <motion.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="fixed top-0 left-0 right-0 z-50 glass py-3"
+        className="fixed top-0 left-0 right-0 z-50 glass py-3.5"
       >
-        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-          <Link href="/" className="relative group flex items-center gap-3">
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="text-text-secondary group-hover:text-accent-bright transition-colors"
-            >
-              <line x1="19" y1="12" x2="5" y2="12" />
-              <polyline points="12 19 5 12 12 5" />
+        <div className="max-w-6xl mx-auto px-6 sm:px-8 flex items-center justify-between">
+          <Link
+            href="/"
+            className="group flex items-center gap-2.5 text-sm text-text-secondary hover:text-text-primary transition-colors"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:-translate-x-0.5 transition-transform">
+              <path d="M19 12H5M12 19l-7-7 7-7" />
             </svg>
-            <span className="text-xl font-bold tracking-tight text-text-primary">
-              CLEO<span className="gradient-text">VERLY</span>
-            </span>
+            Back home
           </Link>
-          <span className="text-text-muted text-sm hidden sm:block">
-            All Projects
-          </span>
+          <span className="text-text-muted text-sm">All projects</span>
         </div>
       </motion.nav>
 
-      <main className="flex-1 relative z-10 pt-24">
-        <div className="max-w-7xl mx-auto px-6">
+      <main className="flex-1 relative z-10 pt-28">
+        <div className="max-w-6xl mx-auto px-6 sm:px-8">
           {/* Page header */}
           <ScrollReveal>
-            <div className="text-center mb-12 pt-8">
-              <p className="text-accent-bright text-sm font-semibold tracking-widest uppercase mb-3">
-                My Work
-              </p>
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-text-primary mb-4">
-                All <span className="gradient-text">Projects</span>
+            <div className="mb-10 pt-6">
+              <p className="eyebrow mb-5">Archive</p>
+              <h1 className="display text-4xl sm:text-5xl md:text-6xl font-semibold text-text-primary">
+                All projects
               </h1>
-              <div className="section-divider" />
-              <p className="text-text-secondary mt-6 max-w-lg mx-auto">
-                A complete collection of projects I&apos;ve built with various technologies.
-                Click on any project to explore more.
+              <p className="text-text-secondary mt-6 max-w-lg">
+                A complete collection of things I&apos;ve built, across various
+                technologies and stacks.
               </p>
             </div>
           </ScrollReveal>
 
           {/* Search & Filters */}
-          <ScrollReveal delay={0.2}>
-            <div className="flex flex-col sm:flex-row items-center gap-4 mb-10">
+          <ScrollReveal delay={0.15}>
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 mb-6">
               {/* Search */}
-              <div className="relative flex-1 w-full sm:max-w-sm">
+              <div className="relative flex-1 w-full sm:max-w-xs">
                 <svg
                   width="18"
                   height="18"
@@ -113,30 +91,30 @@ export default function ProjectsPage() {
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted"
+                  className="absolute left-3.5 top-1/2 -translate-y-1/2 text-text-muted"
                 >
                   <circle cx="11" cy="11" r="8" />
                   <line x1="21" y1="21" x2="16.65" y2="16.65" />
                 </svg>
                 <input
                   type="text"
-                  placeholder="Search projects or technologies..."
+                  placeholder="Search projects or tech..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-12 pr-4 py-3 rounded-xl bg-bg-secondary border border-border text-text-primary placeholder:text-text-muted text-sm focus:outline-none focus:border-accent-dim transition-colors"
+                  className="w-full pl-11 pr-4 py-2.5 rounded-xl bg-white border border-border text-text-primary placeholder:text-text-muted text-sm focus:outline-none focus:border-accent shadow-sm transition-colors"
                 />
               </div>
 
               {/* Category filters */}
-              <div className="flex flex-wrap gap-2 justify-center">
+              <div className="flex flex-wrap gap-2">
                 {categories.map((cat) => (
                   <button
                     key={cat}
                     onClick={() => setActiveCategory(cat)}
-                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+                    className={`px-3.5 py-2 rounded-lg text-sm font-medium transition-colors border ${
                       activeCategory === cat
-                        ? "bg-accent text-bg-primary"
-                        : "bg-bg-secondary text-text-secondary hover:text-text-primary hover:bg-bg-tertiary border border-border"
+                        ? "bg-[#0a0a0a] text-white border-transparent"
+                        : "bg-white text-text-secondary hover:text-text-primary border-border hover:border-border-light"
                     }`}
                   >
                     {cat}
@@ -149,11 +127,8 @@ export default function ProjectsPage() {
           {/* Results count */}
           <div className="mb-6">
             <p className="text-text-muted text-sm">
-              Showing{" "}
-              <span className="text-text-secondary font-medium">
-                {filteredProjects.length}
-              </span>{" "}
-              project{filteredProjects.length !== 1 ? "s" : ""}
+              {filteredProjects.length} project
+              {filteredProjects.length !== 1 ? "s" : ""}
             </p>
           </div>
 
@@ -167,8 +142,8 @@ export default function ProjectsPage() {
               transition={{ duration: 0.4 }}
             >
               {filteredProjects.length > 0 ? (
-                <ScrollReveal stagger staggerDelay={0.1}>
-                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 pb-16">
+                <ScrollReveal stagger staggerDelay={0.08}>
+                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 pb-20">
                     {filteredProjects.map((project, i) => (
                       <ScrollRevealItem key={project.id} direction="up">
                         <ProjectCard
@@ -181,13 +156,10 @@ export default function ProjectsPage() {
                   </div>
                 </ScrollReveal>
               ) : (
-                <div className="text-center py-20">
-                  <div className="text-5xl mb-4">🔍</div>
-                  <p className="text-text-secondary text-lg mb-2">
-                    No projects found
-                  </p>
+                <div className="text-center py-24 border border-border rounded-2xl mb-20">
+                  <p className="text-text-primary mb-1">No projects found</p>
                   <p className="text-text-muted text-sm">
-                    Try adjusting your search or filter
+                    Try adjusting your search or filter.
                   </p>
                 </div>
               )}

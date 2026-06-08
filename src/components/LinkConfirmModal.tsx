@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { Project } from "@/data/projects";
 
@@ -15,8 +14,6 @@ export default function LinkConfirmModal({
   onClose,
   onConfirm,
 }: LinkConfirmModalProps) {
-  const [hoveredBtn, setHoveredBtn] = useState<string | null>(null);
-
   if (!project) return null;
 
   return (
@@ -34,7 +31,8 @@ export default function LinkConfirmModal({
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.9, y: 20 }}
           transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-          className="glass-card max-w-md w-full mx-4 p-8 relative"
+          className="card max-w-md w-full mx-4 p-8 relative"
+          style={{ background: "var(--bg-secondary)" }}
           onClick={(e) => e.stopPropagation()}
         >
           {/* Close button */}
@@ -50,8 +48,8 @@ export default function LinkConfirmModal({
           </button>
 
           {/* Icon */}
-          <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5 mx-auto" style={{ background: "var(--accent-subtle)" }}>
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-accent-bright">
+          <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-5 border border-border">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-text-primary">
               <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
               <polyline points="15 3 21 3 21 9" />
               <line x1="10" y1="14" x2="21" y2="3" />
@@ -59,16 +57,16 @@ export default function LinkConfirmModal({
           </div>
 
           {/* Content */}
-          <div className="text-center mb-8">
+          <div className="mb-8">
             <h3 className="text-xl font-semibold text-text-primary mb-2">
-              Leaving Portfolio
+              Opening an external link
             </h3>
             <p className="text-text-secondary text-sm leading-relaxed">
               You&apos;re about to visit the live site for{" "}
-              <span className="text-accent-bright font-medium">{project.title}</span>.
-              You will be redirected to an external page.
+              <span className="text-text-primary font-medium">{project.title}</span>.
+              It will open in a new tab.
             </p>
-            <p className="text-text-muted text-xs mt-3 break-all">
+            <p className="text-text-muted text-xs mt-3 break-all font-mono">
               {project.liveUrl}
             </p>
           </div>
@@ -77,16 +75,12 @@ export default function LinkConfirmModal({
           <div className="flex gap-3">
             <button
               onClick={onClose}
-              onMouseEnter={() => setHoveredBtn("cancel")}
-              onMouseLeave={() => setHoveredBtn(null)}
               className="btn-secondary flex-1 justify-center"
             >
               Cancel
             </button>
             <button
-              onClick={() => onConfirm(project.liveUrl)}
-              onMouseEnter={() => setHoveredBtn("confirm")}
-              onMouseLeave={() => setHoveredBtn(null)}
+              onClick={() => onConfirm(project.liveUrl ?? "")}
               className="btn-primary flex-1 justify-center"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

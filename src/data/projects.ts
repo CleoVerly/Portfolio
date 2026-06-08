@@ -4,90 +4,96 @@ export interface Project {
   description: string;
   longDescription: string;
   techStack: string[];
-  imageUrl: string;
-  liveUrl: string;
+  liveUrl?: string;
   githubUrl?: string;
   category: string;
   featured: boolean;
   year: number;
+  /** Optional screenshot/cover. Drop a file in /public/projects and set the path
+   *  here (e.g. "/projects/olimversal.png"). Falls back to a placeholder. */
+  image?: string;
 }
 
 export const projects: Project[] = [
   {
-    id: "ecommerce-platform",
-    title: "E-Commerce Platform",
-    description: "Platform e-commerce modern dengan fitur real-time inventory dan payment gateway integration.",
-    longDescription: "Full-stack e-commerce platform yang dibangun dengan Next.js dan Node.js. Fitur termasuk real-time inventory management, Stripe payment integration, admin dashboard, dan responsive design untuk semua device.",
-    techStack: ["Next.js", "TypeScript", "Node.js", "PostgreSQL", "Stripe", "Tailwind CSS"],
-    imageUrl: "/projects/ecommerce.jpg",
-    liveUrl: "https://example-ecommerce.vercel.app",
-    githubUrl: "https://github.com/cleoverly/ecommerce",
-    category: "Full-Stack",
+    id: "olimversal-academy",
+    title: "Olimversal Academy",
+    description:
+      "Landing page platform pelatihan olimpiade sains dengan UI cinematic dan animasi yang halus.",
+    longDescription:
+      "Landing page untuk Olimversal Academy — platform pelatihan olimpiade sains. Dibangun dengan Next.js 15 (App Router), React 19, dan Tailwind CSS v4. Mengandalkan Framer Motion untuk mask reveal, coverflow carousel, scroll progress, dan animated counter, dengan tipografi Playfair Display + Plus Jakarta Sans.",
+    techStack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion"],
+    githubUrl: "https://github.com/CleoVerly/Olimversal-Academy",
+    category: "Web App",
     featured: true,
     year: 2026,
   },
   {
-    id: "task-management",
-    title: "TaskFlow — Project Manager",
-    description: "Aplikasi manajemen proyek dengan Kanban board, real-time collaboration, dan analytics dashboard.",
-    longDescription: "Aplikasi project management yang terinspirasi dari Trello dan Notion. Dibangun dengan React dan Firebase untuk real-time sync. Fitur drag-and-drop Kanban, time tracking, team collaboration, dan reporting analytics.",
-    techStack: ["React", "Firebase", "TypeScript", "Framer Motion", "Chart.js"],
-    imageUrl: "/projects/taskflow.jpg",
-    liveUrl: "https://taskflow-app.vercel.app",
-    githubUrl: "https://github.com/cleoverly/taskflow",
-    category: "Web App",
+    id: "cat-meong-app",
+    title: "Cat Meong — Meow Translate",
+    description:
+      "Web app PWA yang menganalisis suara kucing dan memprediksi emosinya dengan AI.",
+    longDescription:
+      "Aplikasi web cerdas untuk menerjemahkan vokalisasi kucing menjadi konteks emosional (Comfortable, Anxious, Hungry) menggunakan model AI. Mendukung rekam suara langsung dari mikrofon, upload audio, prediksi emosi, dan riwayat analisis. Dibangun sebagai PWA dengan React, TypeScript, dan Vite.",
+    techStack: ["React", "TypeScript", "Vite", "PWA"],
+    liveUrl: "https://cat-meong-app.vercel.app",
+    githubUrl: "https://github.com/CleoVerly/cat-meong-app",
+    category: "AI App",
     featured: true,
-    year: 2025,
+    year: 2026,
   },
   {
-    id: "ai-image-generator",
-    title: "PixelForge AI",
-    description: "Web app untuk generate dan edit gambar menggunakan AI dengan antarmuka yang intuitif.",
-    longDescription: "AI-powered image generation tool yang menggunakan DALL-E API. User bisa generate gambar dari text prompt, edit gambar existing, dan save ke gallery. Dibangun dengan Next.js dan menggunakan OpenAI API.",
-    techStack: ["Next.js", "OpenAI API", "TypeScript", "Prisma", "Tailwind CSS"],
-    imageUrl: "/projects/pixelforge.jpg",
-    liveUrl: "https://pixelforge.vercel.app",
-    category: "AI/ML",
+    id: "craftmit",
+    title: "Craftmit",
+    description:
+      "Generator pesan commit otomatis dari git diff memakai AI, dengan UI neubrutalism interaktif.",
+    longDescription:
+      "Tool berbasis web yang memanfaatkan OpenRouter AI untuk membuat pesan commit yang rapi dan sesuai Conventional Commits langsung dari output git diff. Antarmuka neubrutalism yang bold dengan smart-swap UI untuk berpindah antara input diff dan hasil. Dibangun dengan React + Vite.",
+    techStack: ["React", "Vite", "OpenRouter AI", "Tailwind CSS"],
+    liveUrl: "https://craftmit-cv-team.vercel.app",
+    githubUrl: "https://github.com/CleoVerly/Craftmit-CVTeam",
+    category: "AI Tool",
     featured: true,
-    year: 2025,
+    year: 2026,
   },
   {
-    id: "fitness-tracker",
-    title: "FitPulse",
-    description: "Fitness tracking app dengan workout planner, progress charts, dan social features.",
-    longDescription: "Comprehensive fitness tracking application dengan custom workout builder, progress visualization, calorie tracker, dan social features untuk berbagi achievement. Mobile-first design dengan PWA support.",
-    techStack: ["React", "Node.js", "MongoDB", "Express", "Chart.js", "PWA"],
-    imageUrl: "/projects/fitpulse.jpg",
-    liveUrl: "https://fitpulse-app.vercel.app",
-    githubUrl: "https://github.com/cleoverly/fitpulse",
-    category: "Web App",
+    id: "gamerecs",
+    title: "GameRecs",
+    description:
+      "Sistem rekomendasi game Steam berbasis content-based filtering (TF-IDF & cosine similarity).",
+    longDescription:
+      "Aplikasi web yang merekomendasikan game Steam menggunakan content-based filtering. Mencari kemiripan berdasarkan genre, tag, dan kategori dengan TF-IDF dan cosine similarity. Mendukung pencarian fleksibel, filter genre, paginasi, dan rekomendasi acak. Backend Flask dengan UI Tailwind CSS + DaisyUI.",
+    techStack: ["Python", "Flask", "scikit-learn", "Tailwind CSS"],
+    githubUrl: "https://github.com/CleoVerly/Web-Recomendation-Games",
+    category: "Machine Learning",
     featured: false,
     year: 2025,
   },
   {
-    id: "weather-dashboard",
-    title: "SkyView Weather",
-    description: "Dashboard cuaca interaktif dengan visualisasi data real-time dan forecast 7 hari.",
-    longDescription: "Beautiful weather dashboard yang menggunakan OpenWeatherMap API. Fitur termasuk current conditions, 7-day forecast, interactive maps, air quality index, dan severe weather alerts.",
-    techStack: ["React", "TypeScript", "OpenWeather API", "Mapbox", "Tailwind CSS"],
-    imageUrl: "/projects/skyview.jpg",
-    liveUrl: "https://skyview-weather.vercel.app",
-    category: "Web App",
+    id: "crysense",
+    title: "CrySense",
+    description:
+      "Klasifikasi suara tangisan bayi (lapar, sakit, tidak nyaman) dengan ML & Deep Learning.",
+    longDescription:
+      "Sistem klasifikasi suara tangisan bayi untuk mendeteksi kebutuhan bayi. Melakukan preprocessing audio, ekstraksi fitur (MFCC, Chroma, Spectral Contrast), augmentasi data, lalu melatih dan mengevaluasi model klasifikasi suara berbasis Machine Learning dan Deep Learning.",
+    techStack: ["Python", "TensorFlow", "Librosa", "scikit-learn"],
+    githubUrl: "https://github.com/CleoVerly/CrySense",
+    category: "Machine Learning",
     featured: false,
-    year: 2024,
+    year: 2026,
   },
   {
-    id: "portfolio-cms",
-    title: "ContentHub CMS",
-    description: "Headless CMS custom-built untuk mengelola konten website dan blog dengan mudah.",
-    longDescription: "Custom headless CMS yang dibangun dari scratch menggunakan Node.js dan React. Features include rich text editor, media management, API generation, user roles, dan deployment automation.",
-    techStack: ["Node.js", "React", "PostgreSQL", "Docker", "Redis", "GraphQL"],
-    imageUrl: "/projects/contenthub.jpg",
-    liveUrl: "https://contenthub-cms.vercel.app",
-    githubUrl: "https://github.com/cleoverly/contenthub",
-    category: "Full-Stack",
+    id: "bike-sharing-dashboard",
+    title: "Bike Sharing Dashboard",
+    description:
+      "Dashboard analisis data peminjaman sepeda berdasarkan musim, waktu, dan tren.",
+    longDescription:
+      "Dashboard interaktif yang dibangun dengan Streamlit untuk menganalisis data peminjaman sepeda. Menyajikan tren berdasarkan musim, waktu, dan jumlah peminjaman melalui visualisasi data yang jelas.",
+    techStack: ["Python", "Streamlit", "Pandas", "Matplotlib"],
+    githubUrl: "https://github.com/CleoVerly/Data-Analysis-Bike-Sharing",
+    category: "Data",
     featured: false,
-    year: 2024,
+    year: 2025,
   },
 ];
 
